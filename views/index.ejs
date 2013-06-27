@@ -1,12 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    
-   <%- data.story.posts[0].body %>
-	
-  </body>
-</html>
+<% layout('layout') -%>
+<div id="story" class="well"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        <% for (var i=0;i<stories.length;i++) {%>
+
+        var storyStr = "<%- stories[i].story.posts[0].body %>";
+            var htmlUnescape = function (html) {
+                return String(html)
+                .replace(/&quot;/g, '"');
+            };
+            var formattedStory = htmlUnescape(storyStr);
+            var story = $.parseHTML(formattedStory);
+            
+            //format
+            $('#story').append('<h3><a target="_blank" href="http://<%-stories[i].story.posts[0].url %>">' + '<%-stories[i].story.posts[0].title %>'+'</a></h3>');
+            $('#story').append('<small><%-stories[i].story.posts[0].published_at %></small>');
+            $('#story').append(story);
+            $('#story').append('<hr/>');
+            <% } %>
+         $('.standfirst').addClass('lead');
+            $('img').addClass('img-rounded');
+
+            });
+   
+</script>

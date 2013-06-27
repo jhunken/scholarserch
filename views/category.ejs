@@ -1,0 +1,38 @@
+<% layout('layout') -%>
+<div id="story" class="well"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        <% for (var i=0;i<stories.length;i++) {
+            var htmlUnescape = function (html) {
+                return String(html)
+                .replace(/&quot;/g, '"');
+            };
+            %>
+          var htmlUnescape = function (html) {
+              return String(html)
+              .replace(/&quot;/g, '"');
+          };
+            var htmlEscape = function (html) {
+                return String(html)
+                //.replace(/&(?!\w+;)/g, '&amp;')
+                //.replace(/</g, '&lt;')
+                //.replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                    //newlines
+                .replace(/(\r\n|\n|\r)/gm, "");
+            };
+            //format
+            $('#story').append('<h3><a target="_blank" href="'+'<%-stories[i].link %>">' + htmlUnescape("<%- stories[i].title %>")+'</a></h3>');
+            $('#story').append('<small><%-stories[i].updated %></small>');
+            
+            var description = "<%- stories[i]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'] %>";
+            $('#story').append('<p>'+description+'</p>');
+            $('#story').append('<hr/>');
+            <% } %>
+         $('.standfirst').addClass('lead');
+        $('img').addClass('img-rounded');
+
+    });
+   
+</script>
